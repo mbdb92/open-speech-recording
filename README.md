@@ -1,33 +1,15 @@
-**Open Speech Recording** is a small web application to collect short snippets
-of speech, and upload them to cloud storage. It's designed to help gather open
-speech data sets to train machine learning systems.
+**Open Speech Recording** is a small web application to collect short snippets of speech, and upload them to cloud storage. It's designed to help gather open speech data sets to train machine learning systems.
 
-It's based around a small Flask app that will run on Google App Engine. This
-serves up a client-side Javascript app that prompts for a series of words,
-records the audio, and then POSTs the results back to the server.
+This is a fork of Pete Wardens repository, I only cut out the Google Cloud SDK dependency, as I didn't want to use the cloud service. The side effect of this change is the ability to run it with Python 3 instead of 2.7 only. 
 
 ## Running
 
-To get started, you'll need to edit app.yaml to point to your own storage bucket
-and update the session key. If you have the Google Cloud SDK set up, you should
-be able to run a local copy with this command:
-
+You first have to change the value of `app.secret_key` inside of `main.py` to another value. You may want to use this short shellcode snippet to generate a new secret:
 ```
-dev_appserver.py app.yaml
+head -c 500 /dev/urandom | tr -dc 'a-f0-9' | fold -w 32 | head -n 1
 ```
-
-I've often had trouble getting local copies of the app to work with cloud
-storage, so you may see errors on the final upload stage with this setup. To
-deploy it to an appspot instance, run this:
-
-```
-gcloud app deploy
-```
+Additional you should change the arrays in `wordlist.js` so the user get prompted for the words you want ot record
 
 ## Credits
 
-Thanks to the Mozilla team for the [Web Dictaphone sample application](https://developer.mozilla.org/en-US/docs/Web/API/MediaStream_Recording_API/Using_the_MediaStream_Recording_API#A_sample_application_Web_Dictaphone)
-that I used as a starting point, [Sole](https://soledadpenades.com/) for the
-oscilloscope, and the Flask team for a lovely Python microframework!
-
-Written by Pete Warden, pete@petewarden.com.
+Thanks to Pete Warden, pete@petewarden.com, for his original word on this program.

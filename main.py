@@ -7,16 +7,10 @@ from flask import request
 from flask import session
 from werkzeug.utils import secure_filename
 
-from google.cloud import storage
-
 import os
 import uuid
 
 app = Flask(__name__)
-
-# Configure this environment variable via app.yaml
-CLOUD_STORAGE_BUCKET = os.environ['CLOUD_STORAGE_BUCKET']
-# [end config]
 
 @app.route("/")
 def welcome():
@@ -52,13 +46,8 @@ def upload():
     secure_name = secure_filename(filename)
     # Left in for debugging purposes. If you comment this back in, the data
     # will be saved to the local file system.
-    #with open(secure_name, 'wb') as f:
-    #    f.write(audio_data)
-    # Create a Cloud Storage client.
-    gcs = storage.Client()
-    bucket = gcs.get_bucket(CLOUD_STORAGE_BUCKET)
-    blob = bucket.blob(secure_name)
-    blob.upload_from_string(audio_data, content_type='audio/ogg')
+    with open(secure_name, 'wb') as f:
+        f.write(audio_data)
     return make_response('All good')
 
 # CSRF protection, see http://flask.pocoo.org/snippets/3/.
@@ -76,7 +65,10 @@ def generate_csrf_token():
 
 app.jinja_env.globals['csrf_token'] = generate_csrf_token
 # Change this to your own number before you deploy.
-app.secret_key = os.environ['SESSION_SECRET_KEY']
+# Enable this if you want to set the secret via os variable
+#app.secret_key = os.environ['SESSION_SECRET_KEY']
+# Use this if you want to set it here
+app.secret_key = 'd8f0bc576d182d67347bbf7bbdeeeb6d'
 
 if __name__ == "__main__":
     app.run(debug=True)

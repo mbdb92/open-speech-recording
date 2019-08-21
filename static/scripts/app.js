@@ -178,6 +178,8 @@ function visualize(stream) {
   }
 }
 
+// Originally the wanted words were defined here. Changed it, but left it if needed for debug
+/*
 var wantedWords = [
   'Zero',
   'One',
@@ -213,6 +215,7 @@ var fillerWords = [
   'Wow',
   'Happy',
 ];
+*/
 
 function getRecordedWords() {
   var wordElements = document.querySelectorAll('.clip-label');
