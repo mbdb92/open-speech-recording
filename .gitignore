@@ -1,5 +1,5 @@
 *.pyc
 *~
+*.ogg
 .DS_Store
-lib/
-app.yaml
+audiofiles

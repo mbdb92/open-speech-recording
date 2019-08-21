@@ -40,14 +40,22 @@ def upload():
     session_id = request.cookies.get('session_id')
     if not session_id:
         make_response('No session', 400)
+    directory = 'audiofiles'
     word = request.args.get('word')
     audio_data = request.data
     filename = word + '_' + session_id + '_' + uuid.uuid4().hex + '.ogg'
     secure_name = secure_filename(filename)
     # Left in for debugging purposes. If you comment this back in, the data
     # will be saved to the local file system.
+    try:
+        os.mkdir(directory)
+    except:
+        print("Dir already existed")
+    cdir = os.getcwd()
+    os.chdir(directory)
     with open(secure_name, 'wb') as f:
         f.write(audio_data)
+    os.chdir(cdir)
     return make_response('All good')
 
 # CSRF protection, see http://flask.pocoo.org/snippets/3/.
@@ -68,7 +76,7 @@ app.jinja_env.globals['csrf_token'] = generate_csrf_token
 # Enable this if you want to set the secret via os variable
 #app.secret_key = os.environ['SESSION_SECRET_KEY']
 # Use this if you want to set it here
-app.secret_key = 'd8f0bc576d182d67347bbf7bbdeeeb6d'
+app.secret_key = 'a8f0bc576d182d67347bbf7bbdeeeb6d'
 
 if __name__ == "__main__":
     app.run(debug=True)

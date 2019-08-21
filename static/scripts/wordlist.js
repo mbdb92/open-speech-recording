@@ -1,7 +1,4 @@
 var wantedWords = [
-    'Test',
-    'Eins',
-    'Zwei',
     'Drei',
 ];
 
