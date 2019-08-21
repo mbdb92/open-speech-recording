@@ -8,7 +8,11 @@ You first have to change the value of `app.secret_key` inside of `main.py` to an
 ```
 head -c 500 /dev/urandom | tr -dc 'a-f0-9' | fold -w 32 | head -n 1
 ```
-Additional you should change the arrays in `wordlist.js` so the user get prompted for the words you want ot record
+Additional you should change the arrays in `wordlist.js` so the user get prompted for the words you want ot record.
+Finally start the app, like every other pyhton programm
+```
+python main.py
+```
 
 ## Credits
 
